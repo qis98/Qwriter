@@ -1,0 +1,14 @@
+name: 商业授权咨询
+description: 询问源码复用、二次开发或商业授权
+title: "[授权] "
+body:
+  - type: markdown
+    attributes:
+      value: 此Issue公开可见，请勿填写个人联系方式、客户机密或账号凭据；先描述授权场景即可。
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 希望授权的使用场景
+      placeholder: 例如企业内部二次开发、产品集成或定制需求。
+    validations:
+      required: true

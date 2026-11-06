@@ -1,0 +1,25 @@
+name: 问题反馈
+description: 报告安装、配置、生成、排版或草稿管理问题
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: 请勿上传AppSecret、登录令牌、本地配置文件或含敏感数据的截图。
+  - type: input
+    id: version
+    attributes:
+      label: 软件版本和Windows版本
+      placeholder: 例如 Qwriter 1.0.0 / Windows 11 x64
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤、预期结果和实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: 错误信息或已脱敏截图
+      description: 不要粘贴整个本地配置或登录日志。

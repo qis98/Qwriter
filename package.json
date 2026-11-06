@@ -1,0 +1,77 @@
+{
+  "name": "wechat-article-studio",
+  "version": "1.0.0",
+  "description": "公众号文章创作与管理工具",
+  "author": "Qwriter",
+  "private": true,
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.js",
+    "build:worker": "python scripts/build_worker.py",
+    "pack": "electron-builder --dir --win --x64",
+    "dist": "electron-builder --win nsis portable --x64"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.articlestudio.desktop",
+    "productName": "Qwriter",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "assets/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "runtime",
+        "to": "runtime",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "NOTICE.md",
+        "to": "NOTICE.md"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "signExecutable": false,
+      "icon": "assets/qwriter.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "shortcutName": "Qwriter",
+      "artifactName": "Qwriter-Setup-${version}-${arch}.${ext}",
+      "installerIcon": "assets/qwriter.ico",
+      "uninstallerIcon": "assets/qwriter.ico",
+      "include": "scripts/installer.nsh",
+      "installerLanguages": [
+        "zh_CN"
+      ],
+      "language": "2052"
+    },
+    "portable": {
+      "artifactName": "Qwriter-Portable-${version}-${arch}.${ext}"
+    },
+    "asar": true
+  },
+  "dependencies": {
+    "dompurify": "^3.4.17",
+    "sanitize-html": "^2.18.1",
+    "turndown": "^7.2.5",
+    "turndown-plugin-gfm": "^1.0.2"
+  }
+}

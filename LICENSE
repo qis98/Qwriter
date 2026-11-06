@@ -1,0 +1,22 @@
+Copyright (c) 2026 qis98. All rights reserved.
+
+Qwriter is source-available software. Publishing this repository does not grant
+a general open-source license to Qwriter's original code. Rights not expressly
+granted remain reserved by the copyright holder. Contact the author before
+reusing, modifying, redistributing, or commercially exploiting that code.
+
+The official release installers may be downloaded, installed, and used as
+provided. This permission does not grant permission to repackage or resell
+Qwriter, or to distribute modified versions under the Qwriter name.
+
+Nothing in this notice limits rights granted under GitHub's applicable terms
+of service, or rights under the licenses of third-party software.
+
+Third-party components and adapted material retain their respective licenses.
+See NOTICE.md, third_party/, and the license files distributed with the app.
+This notice does not replace or restrict those third-party licenses.
+
+中文说明：Qwriter 自主代码保留版权与商业授权。仓库公开供查看，
+并不代表采用 MIT 等通用开源许可证。官方安装包允许下载、安装和使用；
+源码复用、修改、再分发或商业授权请先联系作者。第三方代码与素材
+继续适用各自原有许可证，GitHub 平台条款授予的权利不受本说明限制。

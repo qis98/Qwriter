@@ -1,0 +1,30 @@
+(async()=>{
+  notice('Script failed to execute, Check the renderer console',true);if($('notice').textContent.includes('renderer console'))throw Error('原始脚本错误泄漏');notice('');
+  setView('guide');showGuideStep(1);
+  if(document.getElementById('configImportSecret')||document.getElementById('configScan'))throw Error('旧自动按钮未移除');
+  $('guideAppId').value='wx0000000000000000';$('guideSecret').value='0'.repeat(32);
+  await call('save-settings',{appId:$('guideAppId').value,secret:$('guideSecret').value,accountName:'手动配置'});$('guideSecret').value='';
+  await openConfigWeb();await updateConfigBounds();let embedded=await call('config-state');if(!embedded.embedded||!embedded.visible||embedded.bounds.width<100)throw Error('内置网页未显示');
+  await openConfigWeb();if(!(await call('config-state')).visible)throw Error('网页无法找回');
+  setView('settings');await new Promise(r=>setTimeout(r,50));if((await call('config-state')).visible)throw Error('切页后网页遮挡');
+  await openConfigWeb();await hideConfigWeb();
+  await refresh(true);showGuideStep(2);await diagnoseGuide();
+  if($('guideIpBox').hidden||$('guideIp').value!=='192.0.2.42')throw Error('未显示微信返回 IP');
+  if(document.getElementById('configFillIp')||document.getElementById('configHide')||document.getElementById('guideSkip'))throw Error('已删除按钮仍存在');
+  let removed=false;try{await window.studio.call('config-fill-ip');}catch{removed=true;}if(!removed)throw Error('已删除补配接口仍可调用');
+  await diagnoseGuide();if(!guideVerified||!$('guideIpBox').hidden)throw Error('连接复查未完成');
+  const destroyed=await call('config-close');if(destroyed.embedded||destroyed.visible)throw Error('网页资源未销毁');
+  await openConfigWeb();if(!(await call('config-state')).embedded)throw Error('关闭后不能重建');showGuideStep(3);if(document.getElementById('guideStart'))throw Error('旧第四步关闭按钮仍存在');$('configCloseWeb').click();for(let i=0;i<50&&(await call('config-state')).embedded;i++)await new Promise(r=>setTimeout(r,25));if((await call('config-state')).embedded)throw Error('右上角关闭未销毁网页');await openConfigWeb();if(!(await call('config-state')).embedded)throw Error('关闭后无法重新打开');await closeConfigWeb();
+  await call('save-settings',{appId:'wx1111111111111111',secret:'',accountName:'另一账号'});if((await call('snapshot')).settings.hasSecret)throw Error('切换账号残留旧密钥');
+  if(!document.querySelector('#autoSaveToggle .switch-thumb')||$('autoSaveToggle').getAttribute('role')!=='switch')throw Error('滑动开关未渲染');
+  setView('settings');await new Promise(r=>setTimeout(r,80));
+  document.querySelector('#autoSaveToggle .switch-thumb').style.transition='none';
+  const before=getComputedStyle(document.querySelector('#autoSaveToggle .switch-thumb')).transform;
+  await call('save-behavior',{autoSave:false});await refresh();await new Promise(r=>setTimeout(r,220));
+  const after=getComputedStyle(document.querySelector('#autoSaveToggle .switch-thumb')).transform;
+  if(before===after||$('autoSaveToggle').getAttribute('aria-checked')!=='false')throw Error('开关圆点未移动 '+before+' / '+after);
+  await call('save-behavior',{autoSave:true});await refresh();notice('');setView('compose');
+  await new Promise(r=>setTimeout(r,850));const first=await call('notify',{message:'隔离提示频率验证',error:true}),second=await call('notify',{message:'隔离提示频率验证',error:true});if(!first.shown||second.shown)throw Error('重复提示未抑制');
+  if(document.getElementById('accountButton')||document.getElementById('sideConnection'))throw Error('旧全局状态仍存在');
+  return {notificationRateLimited:true,friendlyErrors:true,manualCredentials:true,embeddedRecoverable:true,ipFromWechat:true,manualIpOnly:true,recheck:true,webResourcesReleased:true,slidingSwitch:true,accountSecretCleared:true};
+})()

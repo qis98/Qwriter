@@ -1,0 +1,4 @@
+# Install before scripts/build_worker.py. Existing worker also requires Pillow
+# and PyInstaller; these are already staged by the project's build environment.
+markdown-it-py==4.0.0
+mdurl==0.1.2
